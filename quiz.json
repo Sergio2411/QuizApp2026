@@ -1,0 +1,35 @@
+{
+  "title": "Examen de Ciencias y Lógica",
+  "timeBonusSeconds": 15,
+  "questions": [
+    {
+      "question": "Resuelve la siguiente integral definida: $$\\int_0^1 (3x^2 + 2x) \\,dx$$",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "answer": 1
+    },
+    {
+      "question": "¿Qué ley de Newton se representa en esta imagen?",
+      "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACtWK6eAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAARJSURBVHhe7d3NThxHEIDhVzdwExQUbixYcAEcIAe4bIINl2DBhTsQnJgwhxAL4iBEBEfgoajyU6Oma6Z7pnuGfL/kS1X1b1pndme6d2YEAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgZ1W1W1W9r6oHVVW/q+qHVT1fVf+rqr+f+3sDAwD+S1X9P3b8fVb1p6r6S1X9U1X9VlU3VfW/quqXVT1fVf8/Vf3l3N/b/w0A8E9V9Yeq+mNU/V9V/b+q+lNV/Yeq+lVV/VJVd1X1z6r6V1X9oar+p6r+V1X9/dzf2/8NAPBPVfW7qvpnVf23qvpfVf2HqvpnVfVvVfW3qupOVf2zqv5Z1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f5a1f-QAAAABJRU5ErkJggg==",
+      "options": [
+        "Primera Ley (Inercia)",
+        "Segunda Ley (F=ma)",
+        "Tercera Ley (Acción-Reacción)"
+      ],
+      "answer": 2
+    },
+    {
+      "question": "Si un tren sale de Lima a las 8 AM a 100 km/h y otro de Arequipa a las 9 AM a 120 km/h, ¿dónde se cruzan?",
+      "options": [
+        "Más cerca de Lima",
+        "Justo a la mitad del camino",
+        "Más cerca de Arequipa"
+      ],
+      "answer": 0
+    }
+  ]
+}

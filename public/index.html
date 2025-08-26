@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiQuizOnline</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+
+<!-- CAMBIO: Se elimina el color de fondo de la clase para que lo tome de style.css -->
+<body class="text-slate-800 flex items-center justify-center p-2 sm:p-4">
+    <div
+        class="w-full h-full max-h-[950px] bg-white transition-all duration-300 flex flex-col max-w-md rounded-xl shadow-lg overflow-hidden">
+        <div class="screen active flex flex-col justify-center text-center p-6">
+            <div class="m-auto w-full">
+                <img src="logo.png" alt="Logo de la Preparatoria" class="w-24 h-24 mx-auto mb-6">
+                <h1 class="text-3xl font-bold mb-2">Bienvenido al Sistema de Quiz</h1>
+                <p class="text-slate-600 mb-8">Por favor, selecciona tu rol:</p>
+                <div class="space-y-4">
+                    <!-- CAMBIO: Botón principal ahora es color mostaza (amber) -->
+                    <a href="/student.html"
+                        class="block w-full bg-amber-500 text-white font-bold py-3 rounded-lg hover:bg-amber-600 transition-colors">Soy
+                        Estudiante</a>
+                    <a href="/admin.html"
+                        class="block w-full bg-slate-700 text-white font-bold py-3 rounded-lg hover:bg-slate-800 transition-colors">Soy
+                        Administrador</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

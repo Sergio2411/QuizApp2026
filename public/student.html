@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen - MiQuizOnline</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)'], ['$$', '$$']],
+          displayMath: [['\\[', '\\]']],
+          processEscapes: true
+        },
+        options: {
+          skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+        }
+      };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="text-slate-800 flex items-center justify-center p-2 sm:p-4">
+
+    <div id="offline-indicator" class="hidden fixed top-0 left-0 right-0 p-2 bg-yellow-500 text-black text-center font-semibold z-50">
+        Conexión perdida.
+    </div>
+
+    <div id="confetti-container" class="absolute top-0 left-0 w-full h-full pointer-events-none z-40"></div>
+
+    <div id="main-container" class="w-full h-full max-h-[950px] bg-white transition-all duration-300 flex flex-col max-w-4xl rounded-xl shadow-lg overflow-hidden">
+        
+        <div id="student-login-screen" class="screen active fade-in max-w-md mx-auto w-full p-6 flex-grow justify-center">
+            <div class="m-auto w-full">
+                <a href="/index.html" id="student-back-btn" class="absolute top-4 left-4 text-slate-600 py-2 px-4 rounded-lg hover:bg-slate-100">&larr; Volver</a>
+                <h1 class="text-2xl font-bold text-center mb-4">Acceso al Examen</h1>
+                <p class="text-slate-600 text-center mb-6">Ingresa tu nombre y el código del examen.</p>
+                <input type="text" id="student-name" placeholder="Tu nombre completo" class="w-full px-4 py-3 border rounded-lg mb-4">
+                <input type="text" id="quiz-code" placeholder="Código de 4 dígitos" class="w-full px-4 py-3 border rounded-lg mb-4" maxlength="4">
+                <button id="join-btn" class="w-full bg-amber-500 text-white font-bold py-3 rounded-lg hover:bg-amber-600 transition-colors">Entrar al Examen</button>
+                <p id="student-error" class="text-red-500 text-center mt-4 text-sm font-medium"></p>
+            </div>
+        </div>
+
+        <div id="quiz-screen" class="screen flex flex-col h-full p-4 md:p-6">
+            <div id="quiz-header" class="flex justify-end items-center mb-4 flex-shrink-0">
+                <div class="flex items-center">
+                    <div id="student-hearts-display"></div>
+                    <span id="progress-indicator" class="ml-4 text-sm font-medium bg-slate-200 text-slate-700 px-3 py-1 rounded-full whitespace-nowrap"></span>
+                </div>
+            </div>
+            
+            <div id="question-container" class="fade-in mb-4 flex-shrink-0">
+                <img id="question-image" class="max-w-full mx-auto mb-4 rounded-lg h-auto" style="display: none;" />
+                <p id="question-text" class="text-center text-xl md:text-2xl font-medium"></p>
+            </div>
+
+            <div id="options-container" class="flex-grow min-h-0 w-full"></div> 
+
+            <button id="next-btn" class="w-full mt-4 bg-slate-800 text-white font-bold py-3 rounded-lg hover:bg-slate-900 disabled:bg-slate-400 flex-shrink-0">Siguiente</button>
+        </div>
+
+        <!-- CAMBIO: Se añade h-full al contenedor principal de la pantalla final -->
+        <div id="end-screen" class="screen text-center fade-in p-4 md:p-6 flex flex-col h-full">
+            <div id="waiting-view" class="m-auto">
+                <h2 class="text-2xl font-bold mb-2">¡Has terminado!</h2>
+                <p class="text-slate-600">Espera a que el profesor finalice el examen para ver los resultados.</p>
+            </div>
+            <div id="results-view" class="hidden w-full h-full flex flex-col">
+                <div id="podium-view" class="mb-6 flex-shrink-0">
+                    <div id="podium-emoji" class="text-7xl mb-2"></div>
+                    <h2 id="podium-title" class="text-2xl font-bold"></h2>
+                    <p id="podium-message" class="text-slate-600"></p>
+                </div>
+                <!-- CAMBIO: Se añade un borde y se redondea el contenedor para el scroll -->
+                <div class="scrollable-content flex-grow border rounded-lg">
+                    <h3 class="text-xl font-bold my-2 sticky top-0 bg-white py-2">Ranking Final</h3>
+                    <table class="w-full text-sm text-left">
+                        <thead class="bg-slate-100 sticky top-0">
+                            <tr>
+                                <th class="p-2">#</th>
+                                <th class="p-2">👤</th>
+                                <th class="p-2 text-center">❤️</th>
+                                <th class="p-2 text-center">🏆</th>
+                                <th class="p-2 text-center">✅</th>
+                                <th class="p-2 text-center">❌</th>
+                                <th class="p-2 text-center">⏱️</th>
+                            </tr>
+                        </thead>
+                        <tbody id="final-ranking-table-body"></tbody>
+                    </table>
+                </div>
+                <button id="go-home-btn"
+                    class="w-full mt-4 bg-amber-500 text-white font-bold py-3 rounded-lg hover:bg-amber-600 transition-colors flex-shrink-0">Volver
+                    al Inicio</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="penalty-screen"
+        class="hidden fixed inset-0 bg-red-900 bg-opacity-90 flex items-center justify-center text-white text-center p-4 z-50">
+        <div>
+            <p class="text-4xl mb-4">💔</p>
+            <h2 class="text-2xl font-bold mb-2">¡Sin vidas!</h2>
+            <p class="mb-4">Espera para reintentar...</p>
+            <p id="penalty-countdown" class="text-6xl font-bold">20</p>
+        </div>
+    </div>
+
+    <audio id="sound-hover" src="data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA"></audio>
+    <audio id="sound-click" src="data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YUAAAAAAAAAAAAAAAAAAAAA"></audio>
+    <audio id="sound-select" src="data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YUAAAAAAAAAAAAAAAAAAAAA"></audio>
+    <audio id="sound-correct" src="data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YUAAAAAAAAAAAAAAAAAAAAA"></audio>
+    <audio id="sound-incorrect" src="data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YUAAAAAAAAAAAAAAAAAAAAA"></audio>
+    <audio id="sound-keypress" src="data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA"></audio>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="js/config.js" type="module"></script>
+    <script src="js/sounds.js" type="module"></script>
+    <script src="js/ui.js" type="module"></script>
+    <script src="js/student.js" type="module"></script>
+</body>
+
+</html>

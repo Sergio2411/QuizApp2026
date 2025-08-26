@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administrador - MiQuizOnline</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="text-slate-800 flex items-center justify-center p-2 sm:p-4">
+
+    <div id="main-container" class="w-full h-full max-h-[950px] bg-white transition-all duration-300 flex flex-col max-w-4xl rounded-xl shadow-lg overflow-hidden">
+        
+        <div id="admin-login-screen" class="screen active fade-in max-w-md mx-auto w-full p-6 flex-grow justify-center">
+            <div class="m-auto w-full">
+                <a href="/index.html" class="absolute top-4 left-4 text-slate-600 py-2 px-4 rounded-lg hover:bg-slate-100">&larr; Volver</a>
+                <h1 class="text-2xl font-bold text-center mb-4">Login de Administrador</h1>
+                <input type="password" id="admin-password" placeholder="Contraseña" class="w-full px-4 py-3 border rounded-lg mb-4">
+                <button id="admin-login-btn" class="w-full bg-slate-700 text-white font-bold py-3 rounded-lg hover:bg-slate-800 transition-colors">Ingresar</button>
+                <p id="admin-error" class="text-red-500 text-center mt-4 text-sm font-medium"></p>
+            </div>
+        </div>
+
+        <div id="admin-dashboard-screen" class="screen fade-in text-center p-6 flex-col justify-center"> 
+            <div class="m-auto w-full max-w-md">
+                <div class="flex justify-between items-center mb-4">
+                    <h1 class="text-2xl font-bold">Panel de Control</h1>
+                    <button id="logout-btn" class="text-sm text-slate-600 py-2 px-3 rounded-lg hover:bg-slate-100">Salir &rarr;</button>
+                </div>
+                
+                <div id="quiz-inactive-view">
+                    <div class="mb-4 text-left">
+                        <label for="quiz-selector" class="block text-sm font-medium text-slate-700 mb-1">Selecciona un examen para iniciar:</label>
+                        <select id="quiz-selector" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            <option value="">Cargando exámenes...</option>
+                        </select>
+                    </div>
+                    <button id="start-quiz-btn" class="w-full bg-green-500 text-white font-bold py-3 rounded-lg hover:bg-green-600 transition-colors" disabled>▶ Iniciar Examen</button> 
+                </div> 
+
+                <div id="quiz-active-view" class="hidden"> 
+                    <p class="mb-2">Código de acceso:</p> 
+                    <p id="active-code-display" class="text-5xl font-bold tracking-widest bg-slate-100 p-4 rounded-lg mb-4">----</p> 
+                    <button id="stop-quiz-btn" class="w-full bg-red-500 text-white font-bold py-3 rounded-lg hover:bg-red-600 transition-colors">■ Detener Examen</button> 
+                </div> 
+
+                <hr class="my-6"> 
+                <button id="show-ranking-btn" class="w-full bg-amber-500 text-white font-bold py-3 rounded-lg hover:bg-amber-600 transition-colors mb-2">Ver Ranking</button> 
+                <a href="/crud.html" id="manage-quizzes-btn" class="block w-full text-center bg-slate-600 text-white font-bold py-3 rounded-lg hover:bg-slate-700 transition-colors">Gestionar Exámenes</a>
+            </div>
+        </div>
+
+        <div id="admin-ranking-screen" class="screen fade-in p-6 flex flex-col h-full"> 
+            <div class="flex justify-between items-center mb-4 flex-shrink-0"> 
+                <h1 id="ranking-title" class="text-2xl font-bold">Ranking</h1> 
+                <button id="ranking-back-btn" class="text-slate-600 py-2 px-4 rounded-lg hover:bg-slate-100">Volver</button> 
+            </div> 
+            <div class="scrollable-content flex-grow border rounded-lg"> 
+                <table class="w-full text-sm text-left"> 
+                    <thead class="bg-slate-100 sticky top-0"> 
+                        <tr></tr>
+                    </thead> 
+                    <tbody id="ranking-table-body"> 
+                        <tr><td colspan="8" class="text-center p-4 text-slate-500">Esperando respuestas...</td></tr> 
+                    </tbody> 
+                </table> 
+            </div> 
+        </div>
+    </div>
+
+    <div id="confirm-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg p-6 shadow-xl max-w-sm w-full">
+            <p id="confirm-message" class="text-center mb-4">¿Estás seguro?</p>
+            <div class="flex justify-center space-x-4">
+                <button id="confirm-cancel-btn" class="px-6 py-2 rounded-lg bg-slate-200 hover:bg-slate-300">Cancelar</button>
+                <button id="confirm-ok-btn" class="px-6 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <audio id="sound-hover" src="data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA"></audio>
+    <audio id="sound-click" src="data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YUAAAAAAAAAAAAAAAAAAAAA"></audio>
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="js/config.js" type="module"></script>
+    <script src="js/sounds.js" type="module"></script>
+    <script src="js/ui.js" type="module"></script>
+    <script src="js/admin.js" type="module"></script>
+</body>
+</html>
