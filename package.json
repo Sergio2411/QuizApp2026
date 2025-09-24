@@ -1,0 +1,28 @@
+{
+  "name": "quizapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "init": "tailwindcss init",
+    "build": "tailwindcss -i ./src/input.css -o ./public/css/style.css",
+    "watch": "tailwindcss -i ./src/input.css -o ./public/css/style.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sergio2411/quizapp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Sergio2411/quizapp/issues"
+  },
+  "homepage": "https://github.com/Sergio2411/quizapp#readme",
+  "devDependencies": {
+    "tailwindcss": "^3.4.1"
+  }
+}

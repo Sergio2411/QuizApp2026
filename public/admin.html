@@ -5,8 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Administrador - MiQuizOnline</title>
     <link rel="stylesheet" href="css/style.css">
-    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Configuración de MathJax para renderizar fórmulas matemáticas -->
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']],
+          processEscapes: true
+        },
+        options: {
+          skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+        }
+      };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        .mountain-bg {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><path fill="%234A90E2" d="M0 0h1200v800H0z"/><path fill="%2368B382" d="M600 100L0 800h1200z"/><path fill="%2386C196" d="M250 300L-150 800h800z"/><path fill="%2386C196" d="M950 300l400 500H550z"/><path fill="%23FFFFFF" d="M600 100l-50 50h100zM250 300l-30 30h60zM950 300l-30 30h60z"/></svg>');
+            background-size: cover;
+            background-position: center;
+        }
+        .climber {
+            position: absolute;
+            text-align: center;
+            transition: top 0.8s ease-in-out, left 0.8s ease-in-out;
+            transform: translateX(-50%);
+        }
+        .climber-name {
+            font-size: 0.7rem;
+            font-weight: bold;
+            color: white;
+            background-color: rgba(0,0,0,0.5);
+            padding: 1px 4px;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+    </style>
+
 </head>
 <body class="text-slate-800 flex items-center justify-center p-2 sm:p-4">
 
@@ -22,7 +60,7 @@
             </div>
         </div>
 
-        <div id="admin-dashboard-screen" class="screen fade-in text-center p-6 flex-col justify-center"> 
+        <div id="admin-dashboard-screen" class="screen hidden fade-in text-center p-6 flex-col justify-center"> 
             <div class="m-auto w-full max-w-md">
                 <div class="flex justify-between items-center mb-4">
                     <h1 class="text-2xl font-bold">Panel de Control</h1>
@@ -30,13 +68,33 @@
                 </div>
                 
                 <div id="quiz-inactive-view">
+                     <div class="mb-4 text-left">
+                        <label for="quiz-selector-trigger" class="block text-sm font-medium text-slate-700 mb-1">1. Selecciona un examen:</label>
+                        <div class="relative" id="quiz-selector-wrapper">
+                            <button id="quiz-selector-trigger" class="w-full bg-white text-left px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none flex justify-between items-center">
+                                <span id="selected-quiz-text" class="text-slate-500">Selecciona un examen...</span>
+                                <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div id="quiz-options-container" class="hidden absolute z-10 w-full mt-1 bg-white border border-slate-300 rounded-lg shadow-lg max-h-60 overflow-y-auto"></div>
+                        </div>
+                        <input type="hidden" id="selected-quiz-id">
+                    </div>
                     <div class="mb-4 text-left">
-                        <label for="quiz-selector" class="block text-sm font-medium text-slate-700 mb-1">Selecciona un examen para iniciar:</label>
-                        <select id="quiz-selector" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                            <option value="">Cargando exámenes...</option>
-                        </select>
+                        <!-- INICIO DE LA CORRECCIÓN DE ACCESIBILIDAD -->
+                        <label id="game-mode-label" class="block text-sm font-medium text-slate-700 mb-2">2. Elige el modo de juego:</label>
+                        <div id="game-mode-selector" class="grid grid-cols-2 gap-2" role="group" aria-labelledby="game-mode-label">
+                        <!-- FIN DE LA CORRECCIÓN DE ACCESIBILIDAD -->
+                            <button data-mode="classic" class="mode-button w-full flex items-center justify-center gap-2 p-2 border rounded-lg transition-colors bg-sky-500 text-white">
+                                <span class="text-xl">❤️</span> Clásico en Vivo
+                            </button>
+                            <button data-mode="mastery_peak" class="mode-button w-full flex items-center justify-center gap-2 p-2 border rounded-lg transition-colors bg-white text-slate-700">
+                                <span class="text-xl">🏔️</span> Pico de Maestría
+                            </button>
+                        </div>
+                        <input type="hidden" id="selected-game-mode" value="classic">
                     </div>
                     <button id="start-quiz-btn" class="w-full bg-green-500 text-white font-bold py-3 rounded-lg hover:bg-green-600 transition-colors" disabled>▶ Iniciar Examen</button> 
+                    <button id="preview-quiz-btn" class="w-full bg-sky-500 text-white font-bold py-3 rounded-lg hover:bg-sky-600 transition-colors mt-2" disabled>Vista Previa</button>
                 </div> 
 
                 <div id="quiz-active-view" class="hidden"> 
@@ -50,8 +108,24 @@
                 <a href="/crud.html" id="manage-quizzes-btn" class="block w-full text-center bg-slate-600 text-white font-bold py-3 rounded-lg hover:bg-slate-700 transition-colors">Gestionar Exámenes</a>
             </div>
         </div>
+        
+        <div id="mastery-ranking-screen" class="screen hidden p-6 flex flex-col h-full">
+            <header class="flex justify-between items-center mb-4 flex-shrink-0"> 
+                <h1 id="ranking-title-mastery" class="text-2xl font-bold">Pico de Maestría - En Vivo</h1> 
+                <button id="mastery-back-btn" class="text-slate-600 py-2 px-4 rounded-lg hover:bg-slate-100">Volver</button> 
+            </header> 
+            <div class="flex-grow flex gap-4">
+                <aside class="w-1/3 bg-slate-800 text-white rounded-lg p-2 overflow-y-auto">
+                    <h2 class="font-bold text-center mb-2">Ranking</h2>
+                    <ol id="mastery-ranking-list" class="text-sm space-y-1"></ol>
+                </aside>
+                <main class="w-2/3 relative rounded-lg overflow-hidden mountain-bg">
+                    <div id="climbers-container"></div>
+                </main>
+            </div>
+        </div>
 
-        <div id="admin-ranking-screen" class="screen fade-in p-6 flex flex-col h-full"> 
+        <div id="admin-ranking-screen" class="screen hidden fade-in p-6 flex flex-col h-full"> 
             <div class="flex justify-between items-center mb-4 flex-shrink-0"> 
                 <h1 id="ranking-title" class="text-2xl font-bold">Ranking</h1> 
                 <button id="ranking-back-btn" class="text-slate-600 py-2 px-4 rounded-lg hover:bg-slate-100">Volver</button> 
@@ -61,13 +135,28 @@
                     <thead class="bg-slate-100 sticky top-0"> 
                         <tr></tr>
                     </thead> 
-                    <tbody id="ranking-table-body"> 
-                        <tr><td colspan="8" class="text-center p-4 text-slate-500">Esperando respuestas...</td></tr> 
-                    </tbody> 
+                    <tbody id="ranking-table-body"></tbody> 
                 </table> 
             </div> 
         </div>
+
+        <div id="admin-preview-screen" class="screen hidden flex-col h-full p-4 md:p-6">
+            <header class="flex justify-between items-center mb-4 flex-shrink-0">
+                <h1 id="preview-quiz-title" class="text-xl font-bold">Vista Previa</h1>
+                <div class="flex items-center space-x-4">
+                    <span id="preview-progress-indicator" class="text-sm font-medium bg-slate-200 text-slate-700 px-3 py-1 rounded-full whitespace-nowrap"></span>
+                    <button id="preview-back-btn" class="text-slate-600 py-2 px-4 rounded-lg hover:bg-slate-100">Salir</button>
+                </div>
+            </header>
+            <div id="preview-question-container" class="fade-in mb-4 flex-shrink-0 text-center">
+                <img id="preview-question-image" alt="Imagen de la pregunta" class="max-w-full mx-auto mb-4 rounded-lg h-auto hidden" />
+                <p id="preview-question-text" class="text-xl md:text-2xl font-medium"></p>
+            </div>
+            <div id="preview-options-container" class="flex-grow min-h-0 w-full"></div>
+        </div>
     </div>
+
+    <div id="animation-overlay" class="fixed inset-0 pointer-events-none z-50"></div>
 
     <div id="confirm-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-lg p-6 shadow-xl max-w-sm w-full">
@@ -82,11 +171,15 @@
     <audio id="sound-hover" src="data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA"></audio>
     <audio id="sound-click" src="data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YUAAAAAAAAAAAAAAAAAAAAA"></audio>
     
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <!-- Firebase SDK (Esencial para la funcionalidad) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js" defer></script>
+    
+    <!-- Scripts de la Aplicación -->
     <script src="js/config.js" type="module"></script>
     <script src="js/sounds.js" type="module"></script>
     <script src="js/ui.js" type="module"></script>
     <script src="js/admin.js" type="module"></script>
 </body>
 </html>
+

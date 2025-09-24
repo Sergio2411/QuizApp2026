@@ -1,43 +1,53 @@
 <!DOCTYPE html>
-<html lang="es">
-
+<html lang="es" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MiQuizOnline</title>
+    <title>Bienvenido - MiQuizOnline</title>
 
+    <!-- Favicons y Manifest -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="shortcut icon" href="/favicon.ico">
 
-    <link rel="stylesheet" href="css/style.css">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Estilos -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
 </head>
+<body class="h-full">
 
-<!-- CAMBIO: Se elimina el color de fondo de la clase para que lo tome de style.css -->
-<body class="text-slate-800 flex items-center justify-center p-2 sm:p-4">
-    <div
-        class="w-full h-full max-h-[950px] bg-white transition-all duration-300 flex flex-col max-w-md rounded-xl shadow-lg overflow-hidden">
-        <div class="screen active flex flex-col justify-center text-center p-6">
-            <div class="m-auto w-full">
-                <img src="logo.png" alt="Logo de la Preparatoria" class="w-24 h-24 mx-auto mb-6">
-                <h1 class="text-3xl font-bold mb-2">Bienvenido al Sistema de Quiz</h1>
-                <p class="text-slate-600 mb-8">Por favor, selecciona tu rol:</p>
+    <!-- Contenedor principal semántico -->
+    <main class="w-full h-full flex items-center justify-center p-2 sm:p-4 text-slate-800">
+        <div class="w-full max-w-md bg-white rounded-xl shadow-lg overflow-hidden">
+            
+            <!-- Sección de bienvenida con roles -->
+            <section class="flex flex-col justify-center text-center p-6 sm:p-8">
+                <header class="mb-8">
+                    <img src="logo.png" alt="Logo de la Preparatoria Ciencias" class="w-24 h-24 mx-auto mb-6">
+                    <h1 class="text-3xl font-bold mb-2">Sistema de Quiz</h1>
+                    <p class="text-slate-600">Por favor, selecciona tu rol para continuar:</p>
+                </header>
+
                 <div class="space-y-4">
-                    <!-- CAMBIO: Botón principal ahora es color mostaza (amber) -->
                     <a href="/student.html"
-                        class="block w-full bg-amber-500 text-white font-bold py-3 rounded-lg hover:bg-amber-600 transition-colors">Soy
-                        Estudiante</a>
+                       class="block w-full bg-amber-500 text-white font-bold py-3 rounded-lg hover:bg-amber-600 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
+                       Soy Estudiante
+                    </a>
                     <a href="/admin.html"
-                        class="block w-full bg-slate-700 text-white font-bold py-3 rounded-lg hover:bg-slate-800 transition-colors">Soy
-                        Administrador</a>
+                       class="block w-full bg-slate-700 text-white font-bold py-3 rounded-lg hover:bg-slate-800 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-700">
+                       Soy Administrador
+                    </a>
                 </div>
-            </div>
-        </div>
-    </div>
-</body>
 
+                <footer class="mt-8">
+                    <p class="text-xs text-slate-400">&copy; 2025 Preparatoria Ciencias. Todos los derechos reservados.</p>
+                </footer>
+            </section>
+
+        </div>
+    </main>
+
+</body>
 </html>
