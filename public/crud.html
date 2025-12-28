@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" class="h-full">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,39 +16,57 @@
     <!-- Estilos y Fuentes -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    
+
     <!-- Configuración de MathJax -->
     <script>
-      window.MathJax = {
-        tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']], processEscapes: true },
-        options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre'] }
-      };
+        window.MathJax = {
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']], processEscapes: true },
+            options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre'] }
+        };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
     <!-- Estilos específicos para esta página -->
     <style>
-        .fixed-col { position: sticky; right: 0; z-index: 1; }
-        .fixed-col-header { background-color: #e0f2fe; /* sky-100 */ }
-        .fixed-col-body { background-color: white; border-left: 1px solid #e2e8f0; }
+        .fixed-col {
+            position: sticky;
+            right: 0;
+            z-index: 1;
+        }
+
+        .fixed-col-header {
+            background-color: #e0f2fe;
+            /* sky-100 */
+        }
+
+        .fixed-col-body {
+            background-color: white;
+            border-left: 1px solid #e2e8f0;
+        }
     </style>
 </head>
+
 <body class="h-full text-slate-800 flex items-center justify-center p-2 sm:p-4">
 
-    <main id="main-container" class="w-full h-full bg-white transition-all duration-300 flex flex-col max-w-6xl rounded-xl shadow-lg overflow-hidden">
-        
+    <main id="main-container"
+        class="w-full h-full bg-white transition-all duration-300 flex flex-col max-w-6xl rounded-xl shadow-lg overflow-hidden">
+
         <!-- Pantalla: Lista de Exámenes -->
         <section id="list-quizzes-screen" class="screen active p-6 flex flex-col h-full">
             <header class="flex justify-between items-center mb-4 flex-shrink-0">
                 <h1 class="text-2xl font-bold">Mis Exámenes</h1>
                 <div>
-                    <button data-action="openCreationChoice" class="bg-green-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-600">Crear Nuevo Examen</button>
-                    <button data-action="backToPanel" class="ml-2 text-slate-600 py-2 px-4 rounded-lg hover:bg-slate-100">Volver al Panel</button>
+                    <button data-action="openCreationChoice"
+                        class="bg-green-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-600">Crear Nuevo
+                        Examen</button>
+                    <button data-action="backToPanel"
+                        class="ml-2 text-slate-600 py-2 px-4 rounded-lg hover:bg-slate-100">Volver al Panel</button>
                 </div>
             </header>
             <div class="mb-4 flex-shrink-0">
                 <label for="search-quiz-input" class="sr-only">Buscar examen por título</label>
-                <input type="text" id="search-quiz-input" placeholder="Buscar examen por título..." class="w-full px-3 py-2 border rounded-lg">
+                <input type="text" id="search-quiz-input" placeholder="Buscar examen por título..."
+                    class="w-full px-3 py-2 border rounded-lg">
             </div>
             <div class="scrollable-content flex-grow border rounded-lg">
                 <table class="w-full text-sm text-left">
@@ -55,17 +74,21 @@
                         <tr>
                             <th class="p-3 font-semibold">Título del Examen</th>
                             <th class="p-3 font-semibold text-center w-40">🗓️ Creación</th>
-                            <th class="p-3 font-semibold text-center fixed-col fixed-col-header w-40 right-[100px]">N° de Preguntas</th>
-                            <th class="p-3 font-semibold text-center fixed-col fixed-col-header w-[100px] right-0">Acciones</th>
+                            <th class="p-3 font-semibold text-center fixed-col fixed-col-header w-40 right-[100px]">N°
+                                de Preguntas</th>
+                            <th class="p-3 font-semibold text-center fixed-col fixed-col-header w-[100px] right-0">
+                                Acciones</th>
                         </tr>
                     </thead>
                     <tbody id="quizzes-table-body"></tbody>
                 </table>
             </div>
             <footer id="pagination-controls" class="flex justify-between items-center mt-4 flex-shrink-0">
-                <button id="prev-page-btn" class="bg-sky-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-sky-600 disabled:opacity-50">Anterior</button>
+                <button id="prev-page-btn"
+                    class="bg-sky-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-sky-600 disabled:opacity-50">Anterior</button>
                 <span id="page-indicator" class="text-sm font-medium text-slate-600"></span>
-                <button id="next-page-btn" class="bg-sky-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-sky-600 disabled:opacity-50">Siguiente</button>
+                <button id="next-page-btn"
+                    class="bg-sky-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-sky-600 disabled:opacity-50">Siguiente</button>
             </footer>
         </section>
 
@@ -74,25 +97,19 @@
             <header class="flex justify-between items-center mb-4 flex-shrink-0">
                 <h1 id="view-quiz-title" class="text-2xl font-bold truncate pr-4">Preguntas del Examen</h1>
                 <div>
-                    <button data-action="addQuestionToQuiz" class="bg-green-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-600">Añadir Pregunta</button>
-                    <button data-action="showList" class="ml-2 text-slate-600 py-2 px-4 rounded-lg hover:bg-slate-100">← Volver a Exámenes</button>
+                    <button data-action="addQuestionToQuiz"
+                        class="bg-green-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-600">Añadir
+                        Pregunta</button>
+                    <button data-action="showList" class="ml-2 text-slate-600 py-2 px-4 rounded-lg hover:bg-slate-100">←
+                        Volver a Exámenes</button>
                 </div>
             </header>
             <div class="mb-4 flex-shrink-0">
                 <label for="search-question-input" class="sr-only">Buscar pregunta</label>
-                <input type="text" id="search-question-input" placeholder="Buscar pregunta..." class="w-full px-3 py-2 border rounded-lg">
+                <input type="text" id="search-question-input" placeholder="Buscar pregunta..."
+                    class="w-full px-3 py-2 border rounded-lg">
             </div>
-            <div class="scrollable-content flex-grow border rounded-lg">
-                <table class="w-full text-sm text-left">
-                    <thead class="bg-slate-100 sticky top-0 z-10">
-                        <tr>
-                            <th class="p-3 font-semibold">Pregunta</th>
-                            <th class="p-3 font-semibold w-52">Respuesta Correcta</th>
-                            <th class="p-3 font-semibold text-center w-28">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="questions-table-body"></tbody>
-                </table>
+            <div id="questions-list-container" class="scrollable-content flex-grow p-1">
             </div>
         </section>
 
@@ -103,10 +120,13 @@
                 <div id="single-question-editor-container" class="scrollable-content flex-grow pr-2">
                     <!-- Contenido del editor de pregunta se inserta aquí -->
                 </div>
-                <footer class="flex justify-end items-center mt-6 flex-shrink-0 space-x-3">
-                    <button type="button" data-action="cancelSingleQuestionEdit" class="bg-slate-200 text-slate-800 font-bold py-2 px-4 rounded-lg hover:bg-slate-300">Cancelar</button>
-                    <button type="button" data-action="saveSingleQuestion" class="bg-amber-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-amber-600">Guardar Cambios</button>
-                </footer>
+                <<footer class="flex justify-end items-center mt-6 flex-shrink-0 space-x-3">
+                    <button type="button" data-action="cancelSingleQuestionEdit"
+                        class="bg-slate-200 text-slate-800 font-bold py-2 px-4 rounded-lg hover:bg-slate-300">Cancelar</button>
+                    <button type="button" data-action="saveSingleQuestion"
+                        class="bg-amber-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-amber-600">Guardar
+                        Cambios</button>
+                    </footer>
             </form>
         </section>
 
@@ -117,72 +137,100 @@
                 <div class="scrollable-content flex-grow space-y-6 pr-2">
                     <input type="hidden" id="quiz-id">
                     <div>
-                        <label for="quiz-title-input" class="block text-sm font-medium text-slate-700">Título del Examen</label>
+                        <label for="quiz-title-input" class="block text-sm font-medium text-slate-700">Título del
+                            Examen</label>
                         <input type="text" id="quiz-title-input" class="mt-1 block w-full px-3 py-2 border rounded-md">
                     </div>
                     <div id="questions-editor-container" class="space-y-4"></div>
-                    <button type="button" data-action="addQuestionToForm" class="w-full bg-sky-100 text-sky-800 font-semibold py-2 px-4 rounded-lg hover:bg-sky-200">Añadir Pregunta</button>
+                    <button type="button" data-action="addQuestionToForm"
+                        class="w-full bg-sky-100 text-sky-800 font-semibold py-2 px-4 rounded-lg hover:bg-sky-200">Añadir
+                        Pregunta</button>
                 </div>
                 <footer class="flex justify-end items-center mt-6 flex-shrink-0 space-x-3">
-                    <button type="button" data-action="showList" class="bg-slate-200 text-slate-800 font-bold py-2 px-4 rounded-lg hover:bg-slate-300">Cancelar</button>
-                    <button type="button" data-action="saveQuiz" class="bg-amber-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-amber-600">Guardar Examen</button>
+                    <button type="button" data-action="showList"
+                        class="bg-slate-200 text-slate-800 font-bold py-2 px-4 rounded-lg hover:bg-slate-300">Cancelar</button>
+                    <button type="button" data-action="saveQuiz"
+                        class="bg-amber-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-amber-600">Guardar
+                        Examen</button>
                 </footer>
             </form>
         </section>
-        
+
         <!-- Pantalla: Importar Examen desde JSON -->
         <section id="json-import-screen" class="screen hidden p-6 flex flex-col h-full">
-             <form class="flex flex-col h-full" onsubmit="event.preventDefault();">
-                <h1 class="text-2xl font-bold mb-4 flex-shrink-0">Crear Examen desde JSON</h1>
+            <form class="flex flex-col h-full" onsubmit="event.preventDefault();">
+                <h1 class="text-2xl font-bold mb-4 flex-shrink-0">Crear Examen desde CSV</h1>
                 <div class="flex-grow flex flex-col">
-                    <label for="json-textarea" class="block text-sm font-medium text-slate-700 mb-2">Pega el texto en formato JSON aquí:</label>
-                    <textarea id="json-textarea" class="w-full flex-grow p-3 border rounded-md font-mono text-sm" placeholder='{ "title": "Mi Examen", "questions": [ ... ] }'></textarea>
+                    <label for="json-textarea" class="block text-sm font-medium text-slate-700 mb-2">Pega el texto en
+                        formato CSV aquí (usa el formato TIPO,DATO1...):</label>
+                    <textarea id="json-textarea" class="w-full flex-grow p-3 border rounded-md font-mono text-sm"
+                        placeholder='TIPO,DATO1,DATO2,...\nTITULO,Mi Examen de Prueba\nPREGUNTA,"¿Cuánto es $2+2$?",,1,2,3,4,3'></textarea>
                 </div>
                 <footer class="flex justify-end items-center mt-6 flex-shrink-0 space-x-3">
-                    <button type="button" data-action="showList" class="bg-slate-200 text-slate-800 font-bold py-2 px-4 rounded-lg hover:bg-slate-300">Cancelar</button>
-                    <button type="button" data-action="saveJsonQuiz" class="bg-green-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-600">Guardar desde JSON</button>
+                    <button type="button" data-action="showList"
+                        class="bg-slate-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-slate-600">Salir</button>
+                    <button type="button" data-action="saveCsvQuiz"
+                        class="bg-green-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-600">Guardar desde
+                        CSV</button>
                 </footer>
             </form>
         </section>
     </main>
 
     <!-- Modal: Elección de Creación -->
-    <div id="creation-choice-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-20" role="dialog" aria-modal="true" aria-labelledby="creation-title">
+    <div id="creation-choice-modal"
+        class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-20" role="dialog"
+        aria-modal="true" aria-labelledby="creation-title">
         <div class="bg-white rounded-lg p-8 shadow-xl max-w-sm w-full text-center">
             <h2 id="creation-title" class="text-xl font-bold mb-4">¿Cómo quieres crear el examen?</h2>
             <div class="space-y-4">
-                <button data-action="showNormalForm" class="w-full bg-sky-500 text-white font-bold py-3 rounded-lg hover:bg-sky-600">Modo Normal (Formulario)</button>
-                <button data-action="showJsonImport" class="w-full bg-slate-600 text-white font-bold py-3 rounded-lg hover:bg-slate-700">Modo JSON (Texto)</button>
+                <button data-action="showNormalForm"
+                    class="w-full bg-sky-500 text-white font-bold py-3 rounded-lg hover:bg-sky-600">Modo Normal
+                    (Formulario)</button>
+                <button data-action="showJsonImport"
+                    class="w-full bg-slate-600 text-white font-bold py-3 rounded-lg hover:bg-slate-700">Modo CSV
+                    (Texto)</button>
             </div>
-            <button data-action="closeCreationChoice" class="mt-6 text-sm text-slate-500 hover:underline">Cancelar</button>
+            <button data-action="closeCreationChoice"
+                class="mt-6 text-sm text-slate-500 hover:underline">Cancelar</button>
         </div>
     </div>
 
     <!-- Modal: Confirmación de Eliminación -->
-    <div id="delete-confirm-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-20" role="dialog" aria-modal="true" aria-labelledby="delete-title">
+    <div id="delete-confirm-modal"
+        class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-20" role="dialog"
+        aria-modal="true" aria-labelledby="delete-title">
         <div class="bg-white rounded-lg p-6 shadow-xl max-w-sm w-full">
             <h2 id="delete-title" class="sr-only">Confirmar eliminación</h2>
             <p id="delete-confirm-message" class="text-center mb-4">¿Seguro que quieres eliminar este elemento?</p>
             <div class="flex justify-center space-x-4">
-                <button id="delete-cancel-btn" class="px-6 py-2 rounded-lg bg-slate-200 hover:bg-slate-300">Cancelar</button>
-                <button id="delete-ok-btn" class="px-6 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600">Eliminar</button>
+                <button id="delete-cancel-btn"
+                    class="px-6 py-2 rounded-lg bg-slate-200 hover:bg-slate-300">Cancelar</button>
+                <button id="delete-ok-btn"
+                    class="px-6 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600">Eliminar</button>
             </div>
         </div>
     </div>
 
     <!-- Modal: Alerta simple -->
-    <div id="alert-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-30" role="alertdialog" aria-modal="true" aria-labelledby="alert-title">
+    <div id="alert-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-30"
+        role="alertdialog" aria-modal="true" aria-labelledby="alert-title">
         <div class="bg-white rounded-lg p-6 shadow-xl max-w-sm w-full text-center">
             <h2 id="alert-title" class="sr-only">Aviso</h2>
             <p id="alert-message" class="mb-4">Mensaje de alerta.</p>
-            <button data-action="closeAlert" class="px-8 py-2 rounded-lg bg-sky-500 text-white font-bold hover:bg-sky-600">Entendido</button>
+            <button data-action="closeAlert"
+                class="px-8 py-2 rounded-lg bg-sky-500 text-white font-bold hover:bg-sky-600">Entendido</button>
         </div>
     </div>
 
     <!-- Firebase y Scripts de la App -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js" defer></script>
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js" defer></script>
+    
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js" defer></script>
     <script src="js/config.js" type="module"></script>
     <script src="js/crud.js" type="module"></script>
 </body>
+
 </html>

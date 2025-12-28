@@ -1,39 +1,10 @@
 // Este archivo maneja todas las interacciones con el DOM (la interfaz de usuario)
 
-// --- DATOS Y CONSTANTES ---
-
-export const rankData = [
-    { emoji: '🥇', message: '¡Un rendimiento excepcional! Eres una estrella.' }, { emoji: '🥈', message: '¡Casi en la cima! Un esfuerzo increíble.' },
-    { emoji: '🥉', message: '¡Estás en el podio! Gran trabajo.' }, { emoji: '🚀', message: '¡Despegando hacia el éxito! Sigue así.' },
-    { emoji: '🎯', message: '¡Diste en el blanco! Excelente precisión.' }, { emoji: '💡', message: '¡Una mente brillante en acción! Felicidades.' },
-    { emoji: '⭐', message: '¡Eres una superestrella! Brillaste con luz propia.' }, { emoji: '🧠', message: '¡Ese cerebro está en llamas! Impresionante.' },
-    { emoji: '🏆', message: '¡Actitud de campeón! Un resultado fantástico.' }, { emoji: '🔥', message: '¡Estás imparable! Qué gran energía.' },
-    { emoji: '🦊', message: '¡Astucia y rapidez! Muy bien jugado.' }, { emoji: '🦉', message: '¡Sabiduría en cada respuesta! Excelente.' },
-    { emoji: '🦅', message: '¡Una vista de águila para los detalles!' }, { emoji: '🦁', message: '¡Rugiste con fuerza! Un gran resultado.' },
-    { emoji: '💎', message: '¡Un diamante en bruto! Tu potencial es enorme.' }, { emoji: '🗺️', message: '¡Explorador del conocimiento! Sigue descubriendo.' },
-    { emoji: '🧭', message: '¡Encontraste el norte! Vas por buen camino.' }, { emoji: '🏰', message: '¡Constructor de tu propio éxito! Felicidades.' },
-    { emoji: '🔑', message: '¡Tienes la llave del conocimiento!' }, { emoji: '📚', message: '¡Se nota tu dedicación al estudio! Muy bien.' },
-    { emoji: '⚡', message: '¡Velocidad y precisión! Como un rayo.' }, { emoji: '🌱', message: '¡Tu conocimiento está floreciendo! Sigue creciendo.' },
-    { emoji: '🌻', message: '¡Brillas como el sol! Un resultado muy alegre.' }, { emoji: '🍀', message: '¡La suerte acompaña a los preparados como tú!' },
-    { emoji: '🍄', message: '¡Creciendo a pasos agigantados! Excelente.' }, { emoji: '🐢', message: '¡Lento pero seguro! La constancia es tu fuerte.' },
-    { emoji: '🐿️', message: '¡Agilidad mental! Muy buenas respuestas.' }, { emoji: '🐘', message: '¡Memoria de elefante! No se te escapa nada.' },
-    { emoji: '🦋', message: '¡Transformando el esfuerzo en éxito!' }, { emoji: '🌠', message: '¡Eres una estrella fugaz! Rápido y brillante.' },
-    { emoji: '☀️', message: '¡Iluminaste el examen con tus respuestas!' }, { emoji: '🪐', message: '¡Tu conocimiento es de otra galaxia!' },
-    { emoji: '✨', message: '¡Un toque de magia en cada respuesta!' }, { emoji: '🎉', message: '¡A celebrar este gran resultado!' },
-    { emoji: '🎊', message: '¡Fiesta de conocimiento! Muy bien hecho.' }, { emoji: '🎁', message: '¡Tu inteligencia es un regalo! Sigue así.' },
-    { emoji: '🎨', message: '¡Pintaste una obra de arte con tus respuestas!' }, { emoji: '🎭', message: '¡Dominas el escenario del saber! Excelente.' },
-    { emoji: '🎻', message: '¡Tus respuestas suenan como una sinfonía!' }, { emoji: '🎲', message: '¡Arriesgaste y ganaste! Muy bien.' },
-];
+import { rankData, playerEmojis } from './data.js';
 
 export function getRankData(index) {
     return rankData[index] || { emoji: `P${index + 1}` };
 }
-
-const playerEmojis = [
-    '😀', '😎', '😂', '🥳', '🤩', '🤯', '🤗', '🦄', '🦁', '🐯',
-    '🦊', '🐶', '🐱', '🐭', '🐰', '🐼', '🐨', '🐻', '🐸', '🐢',
-    '🦖', '🚀', '🛸', '🛰️', '⚡', '⭐', '🌟', '✨', '🔥', '💯'
-];
 
 const TIERS = ['❤️', '💖', '🔥', '🏆', '👑'];
 const SCREEN_WIDTHS = {
@@ -91,22 +62,46 @@ export function renderContent() {
 }
 
 export function renderEmojiSelector(containerId, hiddenInputId) {
-    const container = document.getElementById(containerId);
+    const container = document.getElementById(containerId); // Ahora es un DIV, no un SELECT
     const hiddenInput = document.getElementById(hiddenInputId);
+    const confirmBtn = document.getElementById('confirm-avatar-btn');
+    const preview = document.getElementById('avatar-preview');
+
     if (!container || !hiddenInput) return;
 
+    // Limpiamos el contenedor
     container.innerHTML = '';
 
+    // Importamos los emojis desde data.js (ya lo hicimos en el paso anterior, así que usamos la variable global importada)
+    // Asegúrate de que al inicio de ui.js tengas: import { playerEmojis } from './data.js';
+    
     playerEmojis.forEach(emoji => {
-        const button = document.createElement('button');
-        button.className = 'p-2 text-3xl rounded-lg hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors';
-        button.textContent = emoji;
-        button.onclick = () => {
+        // Creamos un botón por cada emoji
+        const btn = document.createElement('button');
+        btn.textContent = emoji;
+        btn.className = 'text-3xl p-2 rounded-lg hover:bg-slate-100 transition-transform hover:scale-110 focus:outline-none';
+        
+        // Al hacer clic en un emoji
+        btn.onclick = () => {
+            // 1. Actualizar lógica (Input oculto)
             hiddenInput.value = emoji;
-            container.querySelectorAll('button').forEach(btn => btn.classList.remove('bg-blue-200'));
-            button.classList.add('bg-blue-200');
+            
+            // 2. Actualizar visual (Preview y Botón Confirmar)
+            preview.textContent = emoji;
+            preview.classList.remove('animate-bounce'); // Quitamos el salto del "?"
+            confirmBtn.disabled = false; // Activamos el botón de jugar
+
+            // 3. Estilo de "Seleccionado"
+            // Quitamos el estilo a todos los botones
+            const allBtns = container.querySelectorAll('button');
+            allBtns.forEach(b => {
+                b.classList.remove('bg-blue-100', 'ring-2', 'ring-blue-400');
+            });
+            // Se lo ponemos al clickeado
+            btn.classList.add('bg-blue-100', 'ring-2', 'ring-blue-400');
         };
-        container.appendChild(button);
+
+        container.appendChild(btn);
     });
 }
 
@@ -359,7 +354,7 @@ export function updateRankingTable(ranking, quizCode, onDelete, showTime) {
     document.querySelectorAll('.delete-student-btn').forEach(btn => btn.addEventListener('click', onDelete));
 }
 
-export function updateMasteryRanking(students, totalQuestions) {
+export function updateMasteryRanking(students, totalQuestions, quizCode, onDelete) {
     const container = document.getElementById('climbers-container');
     const rankingList = document.getElementById('mastery-ranking-list');
     
@@ -379,9 +374,15 @@ export function updateMasteryRanking(students, totalQuestions) {
                 <span class="flex-grow truncate">${student.name}</span>
                 ${penalty ? `<span class="text-xs font-bold text-red-400 bg-red-900/50 px-2 py-1 rounded-full">⏱️ ${penaltySeconds}s</span>` : ''}
                 <span class="font-semibold ml-2">${progress}/${totalQuestions}</span>
-            </li>
+                <button data-student-id="${student.id}" data-student-name="${student.name}" data-quiz-code="${quizCode}" class="delete-student-btn-mastery text-red-400 hover:text-red-200 ml-auto font-bold text-lg">✖</button>
+                </li>
         `;
     }).join('');
+
+    // Se añade el listener para los nuevos botones
+    document.querySelectorAll('.delete-student-btn-mastery').forEach(btn => {
+        btn.addEventListener('click', onDelete);
+    });
 
     // Actualizar montaña animada
     const currentClimbers = new Set();
@@ -402,7 +403,7 @@ export function updateMasteryRanking(students, totalQuestions) {
         }
 
         const progress = (student.progressCount || 0) / totalQuestions;
-        const topPosition = 90 - (progress * 80); 
+        const topPosition = 85 - (progress * 75); // <-- LÍNEA CORREGIDA
         const horizontalWave = Math.sin(progress * Math.PI * 1.5) * 25;
         const leftPosition = 50 + horizontalWave;
 
@@ -431,7 +432,9 @@ export function showFinalMasteryPodium(students, totalQuestions) {
     document.getElementById('mastery-ranking-list').innerHTML = '';
 
     const tableContainer = document.createElement('div');
+    tableContainer.id = "final-ranking-table-container"; // <-- LÍNEA AÑADIDA
     tableContainer.className = "p-4 bg-white/90 backdrop-blur-sm absolute inset-0 overflow-y-auto";
+
 
     const sortedRanking = sortMasteryRanking(students, totalQuestions);
     
@@ -620,26 +623,26 @@ export function showFinalPodium(ranking, deviceId, studentName, gameMode, totalQ
     document.getElementById('podium-message').textContent = rankInfo.message;
 }
 
-// --- INICIO DE LA MODIFICACIÓN ---
-// Se añade la función que faltaba para renderizar las medallas.
+// ui.js
+
+// PEGA ESTA NUEVA VERSIÓN DE LA FUNCIÓN
 export function renderMedals(medals) {
-    const container = document.getElementById('medals-container');
-    if (!container) return;
+    const tableBody = document.getElementById('medals-table-body');
+    if (!tableBody) return;
 
     if (medals.length === 0) {
-        container.innerHTML = `<p class="text-slate-500 col-span-full text-center">Aún no has ganado ninguna medalla. ¡Sigue jugando!</p>`;
+        tableBody.innerHTML = `<tr><td colspan="3" class="text-center p-4 text-slate-500">Aún no has ganado ninguna medalla. ¡Sigue jugando!</td></tr>`;
         return;
     }
 
-    container.innerHTML = medals.map(medal => `
-        <div class="bg-white border rounded-lg p-4 flex flex-col items-center text-center shadow">
-            <div class="text-6xl mb-2">${medal.emoji}</div>
-            <p class="font-bold text-sm truncate w-full" title="${medal.quizTitle}">${medal.quizTitle}</p>
-            <p class="text-xs text-slate-500">${new Date(medal.date.seconds * 1000).toLocaleDateString()}</p>
-        </div>
+    tableBody.innerHTML = medals.map(medal => `
+        <tr class="border-b">
+            <td class="p-2 text-center text-3xl">${medal.emoji}</td>
+            <td class="p-2 font-medium">${medal.quizTitle}</td>
+            <td class="p-2 text-slate-600">${new Date(medal.date.seconds * 1000).toLocaleDateString()}</td>
+        </tr>
     `).join('');
 }
-// --- FIN DE LA MODIFICACIÓN ---
 
 
 export function showPenaltyScreen(duration, onComplete) {
@@ -744,3 +747,35 @@ export function showCrossAnimation() {
     return showFeedbackAnimation('❌');
 }
 
+export function renderQuizReview(questions) {
+    const container = document.getElementById('quiz-review-container');
+    if (!container) return;
+
+    container.innerHTML = questions.map((question, index) => {
+        const optionsHTML = question.options.map((option, optIndex) => {
+            const isCorrect = optIndex === question.answer;
+            return `
+                <p class="flex items-center gap-2 ${isCorrect ? 'font-bold text-green-700' : 'text-slate-600'}">
+                    <span class="text-lg">${isCorrect ? '✅' : '➖'}</span>
+                    <span>${option}</span>
+                </p>
+            `;
+        }).join('');
+
+        return `
+            <div class="border bg-white rounded-lg p-4 mb-4 shadow-sm">
+                <div class="flex justify-between items-center mb-3 pb-3 border-b">
+                    <h3 class="font-semibold text-slate-500 text-sm">PREGUNTA ${index + 1}</h3>
+                </div>
+                <p class="text-lg text-slate-800 mb-4">${question.question}</p>
+                ${question.image ? `<img src="${question.image}" alt="Imagen de la pregunta" class="max-w-full mx-auto mb-4 rounded-lg h-auto" />` : ''}
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+                    ${optionsHTML}
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    // Vuelve a procesar las fórmulas matemáticas si es necesario
+    renderContent();
+}
